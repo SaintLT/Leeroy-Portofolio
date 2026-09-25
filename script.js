@@ -1,97 +1,91 @@
-// Leeroy Mwangi — Portfolio
-// Plain JavaScript, no libraries. Each numbered block does one job.
+// ===== Year =====
+document.getElementById("year").textContent = new Date().getFullYear();
 
-// Tell the CSS that JavaScript is running (used by the scroll-reveal styles)
-document.documentElement.classList.add("js");
+// ===== Nav: solid on scroll + mobile menu =====
+const nav = document.querySelector(".nav");
+const menu = document.getElementById("navMenu");
+document.getElementById("menuToggle").addEventListener("click", () => menu.classList.toggle("open"));
+menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => menu.classList.remove("open")));
+window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 12));
 
-// ---------- Grab the page elements we need ----------
-const header = document.querySelector(".site-header");
-const navToggle = document.querySelector("#nav-toggle");
-const navMenu = document.querySelector("#nav-menu");
-const navLinks = document.querySelectorAll(".nav-link");
-const sections = document.querySelectorAll("main section[id]");
-const revealItems = document.querySelectorAll(".reveal");
-const profileImage = document.querySelector("#profile-image");
-
-// ---------- 1. Mobile navigation menu ----------
-function closeMenu() {
-  navMenu.classList.remove("is-open");
-  navToggle.setAttribute("aria-expanded", "false");
-}
-
-function toggleMenu() {
-  const isOpen = navMenu.classList.toggle("is-open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-}
-
-navToggle.addEventListener("click", toggleMenu);
-
-// Close the menu after tapping a link
-navLinks.forEach(function (link) {
-  link.addEventListener("click", closeMenu);
-});
-
-// Close the menu with the Escape key
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape" && navMenu.classList.contains("is-open")) {
-    closeMenu();
-    navToggle.focus();
-  }
-});
-
-// ---------- 2. Header style changes after scrolling ----------
-function updateHeader() {
-  header.classList.toggle("is-scrolled", window.scrollY > 10);
-}
-window.addEventListener("scroll", updateHeader, { passive: true });
-updateHeader();
-
-// ---------- 3. Scroll reveal animation ----------
-// IntersectionObserver tells us when an element enters the screen.
-const revealObserver = new IntersectionObserver(
-  function (entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target); // animate only once
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-
-revealItems.forEach(function (item) {
-  revealObserver.observe(item);
-});
-
-// ---------- 4. Highlight the nav link of the section you're viewing ----------
+// ===== Active link highlight =====
+const links = menu.querySelectorAll("a");
 const sectionObserver = new IntersectionObserver(
-  function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        navLinks.forEach(function (link) {
-          const isCurrent = link.getAttribute("href") === "#" + entry.target.id;
-          link.classList.toggle("is-active", isCurrent);
-        });
+  (entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
       }
     });
   },
-  // Only a thin band near the middle of the screen counts as "current"
-  { rootMargin: "-40% 0px -55% 0px" }
+  { rootMargin: "-45% 0px -50% 0px" }
 );
+document.querySelectorAll("section[id]").forEach((s) => sectionObserver.observe(s));
 
-sections.forEach(function (section) {
-  sectionObserver.observe(section);
-});
+// ===== Reveal on scroll =====
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("show");
+        revealObserver.unobserve(e.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
-// ---------- 5. Show the "LM" placeholder if profile.jpg is missing ----------
-function hideBrokenProfileImage() {
-  profileImage.classList.add("is-missing");
+// ===== Animated tech network background =====
+const canvas = document.getElementById("network-bg");
+const ctx = canvas.getContext("2d");
+let nodes = [];
+const mouse = { x: null, y: null };
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const count = Math.min(90, Math.floor((canvas.width * canvas.height) / 16000));
+  nodes = Array.from({ length: count }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.35,
+    vy: (Math.random() - 0.5) * 0.35,
+  }));
 }
+window.addEventListener("resize", resize);
+window.addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener("mouseleave", () => { mouse.x = mouse.y = null; });
+resize();
 
-profileImage.addEventListener("error", hideBrokenProfileImage);
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-// The image may have already failed before this script ran, so check too
-if (profileImage.complete && profileImage.naturalWidth === 0) {
-  hideBrokenProfileImage();
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.beginPath(); ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2); ctx.fill();
+
+    for (let j = i + 1; j < nodes.length; j++) {
+      const m = nodes[j];
+      const d = Math.hypot(n.x - m.x, n.y - m.y);
+      if (d < 130) {
+        ctx.strokeStyle = `rgba(255,255,255,${0.18 * (1 - d / 130)})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke();
+      }
+    }
+    if (mouse.x !== null) {
+      const d = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+      if (d < 170) {
+        ctx.strokeStyle = `rgba(255,255,255,${0.35 * (1 - d / 170)})`;
+        ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
 }
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) draw();
