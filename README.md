@@ -2,9 +2,9 @@
 
 ## About
 
-A personal portfolio website that documents my Computer Science journey, skills and projects. I built it from scratch with plain HTML, CSS and JavaScript to learn the fundamentals of web development.
+A personal portfolio website that showcases my Computer Science background, technical skills, projects and hands-on experience in software development, networking, Linux and cybersecurity. I built it from scratch with plain HTML, CSS and JavaScript to learn the fundamentals of web development.
 
-**Live site:** `YOUR_LIVE_SITE_URL`
+**Live site:** [saintlt.github.io/Leeroy-Portofolio](https://saintlt.github.io/Leeroy-Portofolio/)
 
 ## Built With
 
@@ -14,29 +14,45 @@ A personal portfolio website that documents my Computer Science journey, skills 
 
 No frameworks or external libraries.
 
+## Sections
+
+- **Home** — introduction, links to my CV, GitHub and LinkedIn
+- **About** — a short profile, my focus areas and quick stats
+- **Skills** — Programming, Web Development, Tools & Version Control, and Systems & Security
+- **Projects** — practical work with tech tags and GitHub links
+- **Experience** — my 2026 Computer Science industrial attachment and my technical journey
+- **Contact** — email, phone, GitHub and LinkedIn
+
 ## Features
 
 - Dark, minimal developer-style design with a single accent colour
 - Fully responsive (desktop, laptop, tablet and mobile)
 - Mobile navigation menu and active section highlighting
 - Smooth scrolling and subtle scroll-reveal animations
+- Downloadable CV (PDF) straight from the hero section
 - Accessible: semantic HTML, keyboard-friendly, skip link, visible focus styles
 - Respects the "reduced motion" setting
 - Easy to edit: add projects, skills and sections by copying existing blocks
 
 ## Projects
 
-- **Python Calculator** — a beginner project for practising programming fundamentals and the Git/GitHub workflow.
-- **Network Diagnostic Toolkit** — a planned Python project for learning network diagnostics (coming soon).
-- **Personal Portfolio Website** — this website.
+- **Python Calculator** — a Python application demonstrating programming fundamentals, logical problem solving and the Git/GitHub workflow. [View on GitHub](https://github.com/SaintLT/Python-calc)
+- **Network Diagnostic Toolkit** — a Python-based toolkit for network diagnostics and troubleshooting *(in development)*.
+- **Personal Portfolio Website** — this website. [View on GitHub](https://github.com/SaintLT/Leeroy-Portofolio)
+
+## Experience
+
+**Computer Science Industrial Attachment (2026)** — practical experience with IT systems, networking, troubleshooting and technical problem solving in a professional environment.
+
+Key areas: network troubleshooting, hardware and software support, Windows administration, networking fundamentals.
 
 ## Getting Started
 
 ### Clone the repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
-cd leeroy-portfolio
+git clone https://github.com/SaintLT/Leeroy-Portofolio.git
+cd Leeroy-Portofolio
 ```
 
 ### Run it locally
@@ -49,14 +65,16 @@ No build step is needed. Either:
 ## Folder Structure
 
 ```
-leeroy-portfolio/
+Leeroy-Portofolio/
 ├── index.html        # Page content and structure
 ├── css/
 │   └── style.css     # All styling
 ├── js/
 │   └── script.js     # Interactivity
 ├── images/
-│   └── profile.jpg   # Profile photo
+│   └── profile1.jpg  # Profile photo
+├── assets/
+│   └── Leeroy_Mwangi_CV.pdf  # Downloadable CV
 └── README.md         # This file
 ```
 
@@ -66,13 +84,13 @@ leeroy-portfolio/
 - Add a favicon and Open Graph tags for nicer link previews
 - Add a light/dark theme toggle
 - Add a working contact form
+- Publish the Network Diagnostic Toolkit
 - Write short blog posts about what I'm learning
-- Add a downloadable CV/resume
 
 ## Author
 
 **Leeroy Mwangi**
 
-- GitHub: `YOUR_GITHUB_URL`
-- LinkedIn: `YOUR_LINKEDIN_URL`
-- Email: `YOUR_EMAIL`
+- GitHub: [@SaintLT](https://github.com/SaintLT)
+- LinkedIn: [Leeroy Mwangi](https://www.linkedin.com/in/leeroy-mwangi-39836832a/)
+- Email: [leeroymwangi92@gmail.com](mailto:leeroymwangi92@gmail.com)
