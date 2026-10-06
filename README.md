@@ -37,7 +37,7 @@ No frameworks or external libraries.
 ## Projects
 
 - **Python Calculator** — a Python application demonstrating programming fundamentals, logical problem solving and the Git/GitHub workflow. [View on GitHub](https://github.com/SaintLT/Python-calc)
-- **Network Diagnostic Toolkit** — a Python-based toolkit for network diagnostics and troubleshooting *(in development)*.
+- **Network Diagnostic Toolkit** — a Python-based toolkit for network diagnostics and troubleshooting -  [View on GitHub](https://github.com/SaintLT/Netdiag)
 - **Personal Portfolio Website** — this website. [View on GitHub](https://github.com/SaintLT/Leeroy-Portofolio)
 
 ## Experience
