@@ -1,283 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leeroy Mwangi | Software Developer & Engineer</title>
-  <meta name="description" content="Portfolio of Leeroy Mwangi — Computer Science student and software developer with practical skills in software engineering, networking, Linux and cybersecurity." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leeroy Mwangi | Software Developer & Engineer</title>
+<meta name="description" content="Computer Science student and software developer: software engineering, networking, Linux and cybersecurity.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2EBE1;--fg:#111;--mu:#5b554b;--ac:#C9B27C;--ax:#6f5a1c;--ln:#cfc6b8;--cd:#E9E0D3}
+[data-theme=dark]{--bg:#0E0E0E;--fg:#F2EBE1;--mu:#A8A39A;--ax:#C9B27C;--ln:#333;--cd:#161616}
+*{box-sizing:border-box}html{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.7 Manrope,system-ui,sans-serif;transition:background .4s,color .4s}
+a{color:inherit}:focus-visible{outline:2px solid var(--ax);outline-offset:3px}
+.d{font-family:Anton,Impact,sans-serif;font-weight:400;line-height:.95;margin:0}
+nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 5vw 14px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);font-size:13px;font-weight:800;letter-spacing:.08em}
+nav div{display:flex;gap:26px;align-items:center}nav a{text-decoration:none}
+.btn{display:inline-block;background:var(--ac);color:#111;border:0;padding:14px 26px;font:800 14px Manrope;text-decoration:none;cursor:pointer;min-height:44px}
+.btn.o{background:none;color:var(--fg);border:1.5px solid var(--fg)}
+#th{background:none;border:1.5px solid var(--fg);color:var(--fg);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px}
+section{padding:110px 5vw;max-width:1280px;margin:auto}
+h2.d{font-size:clamp(3rem,9vw,7rem);margin-bottom:36px}
+#home{min-height:100svh;display:flex;flex-direction:column;justify-content:center;text-align:center;max-width:none;padding-top:90px}
+#hl{font-size:clamp(4.5rem,25vw,24rem);filter:url(#wob);cursor:default;letter-spacing:.01em}
+#sub{font-size:clamp(1.8rem,6vw,5rem);margin-top:6px}
+#home p{max-width:560px;margin:22px auto;color:var(--mu)}
+#home .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cue{margin:34px auto 0;width:1px;height:46px;background:var(--fg)}
+#ld{position:fixed;inset:0;z-index:99;background:#0E0E0E;color:#C9B27C;display:flex;align-items:center;justify-content:center;font-size:clamp(4rem,16vw,10rem)}
+.ab{display:grid;grid-template-columns:minmax(0,380px) 1fr;gap:56px;align-items:center}
+.ab img{width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--cd);border:1px solid var(--ln)}
+.hl{font-size:clamp(2.2rem,5vw,4.2rem)}.hl b{font-weight:400;color:var(--ax)}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.st div,.card,.sk div{border:1px solid var(--ln);background:var(--cd);padding:22px}
+.st strong{display:block;font:400 2.6rem Anton;color:var(--ax)}
+.sk{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.sk h3,.card h3{margin:0 0 8px;font-size:18px}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.tg span{border:1px solid var(--ln);padding:3px 11px;font-size:12px;font-weight:600}
+#pj{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{display:flex;flex-direction:column;transition:transform .25s}.card:hover{transform:translateY(-4px)}
+.card p{color:var(--mu);margin:0 0 8px;flex:1}.card a{font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.note{color:var(--mu);font-size:14px}
+.cn{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+form{display:grid;gap:14px}label{font-size:13px;font-weight:800}
+input,textarea{display:block;width:100%;margin-top:6px;padding:14px;background:var(--cd);border:1px solid var(--ln);color:var(--fg);font:inherit}
+footer{text-align:center;padding:40px 5vw 120px;color:var(--mu);font-size:14px}
+.fab{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));z-index:30;min-height:56px;border-radius:28px;border:0;cursor:pointer;font:800 14px Manrope;display:flex;align-items:center;gap:8px;padding:0 20px;text-decoration:none;box-shadow:0 6px 20px #0004}
+#wa{right:20px;background:#25D366;color:#073b1b}#ai{left:20px;background:var(--fg);color:var(--bg)}
+#cp{position:fixed;left:20px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:40;width:min(360px,calc(100vw - 40px));height:min(480px,60svh);background:var(--bg);border:1.5px solid var(--fg);display:none;flex-direction:column}
+#cp.on{display:flex}#cp header{padding:12px 16px;font-weight:800;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between}
+#cl{flex:1;overflow:auto;padding:14px;display:grid;gap:8px;align-content:start}
+#cl p{margin:0;padding:9px 13px;max-width:88%;font-size:14px;line-height:1.5;background:var(--cd)}#cl p.u{justify-self:end;background:var(--ac);color:#111}
+#cf{display:flex;gap:6px;padding:10px;border-top:1px solid var(--ln)}#cf input{margin:0;min-width:0}#cf button{min-width:44px;background:var(--ac);border:0;cursor:pointer;font-weight:800}
+@media(max-width:800px){.ab,.cn{grid-template-columns:1fr;gap:32px}nav div a:not(#th){display:none}section{padding:80px 5vw}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
-  <!-- Tech background layers -->
-  <canvas id="network-bg" aria-hidden="true"></canvas>
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-circuit" aria-hidden="true"></div>
-  <div class="bg-vignette" aria-hidden="true"></div>
+<div id="ld" class="d" aria-hidden="true">0%</div>
+<svg width="0" height="0" aria-hidden="true"><filter id="wob"><feTurbulence id="tb" type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" result="n"/><feDisplacementMap id="dm" in="SourceGraphic" in2="n" scale="0"/></filter></svg>
+<nav><a href="#home" style="font-size:18px">LM</a><div><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a><button id="th" type="button" aria-label="Switch to dark theme">◐</button></div></nav>
+<main>
+<section id="home"><p style="margin:0;font-weight:800">Hello, I’m Leeroy Mwangi</p>
+<h1 id="hl" class="d">SOFTWARE</h1><div id="sub" class="d">DEVELOPER &amp; ENGINEER</div>
+<p>I build practical software and apply networking, Linux and cybersecurity knowledge to real-world projects.</p>
+<div class="row"><a class="btn" href="#projects">View my work</a><a class="btn o" href="assets/Leeroy_Mwangi_CV.pdf">Download CV</a></div><div class="cue"></div></section>
 
-  <!-- NAV -->
-  <header class="nav">
-    <a href="#home" class="logo">LM</a>
-    <nav class="nav-pill" id="navMenu">
-      <a href="#home" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a href="#contact" class="btn btn-small nav-cta">Let's Talk</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
-  </header>
+<section id="about"><div class="ab"><img src="images/profile1.jpg" alt="Leeroy Mwangi" onerror="this.style.visibility='hidden'">
+<div><h2 class="d hl">I turn technical knowledge into <b>practical solutions.</b></h2>
+<p class="note" style="font-size:16px;max-width:60ch">I’m a Computer Science student with hands-on experience in software development, networking, Linux and cybersecurity. I enjoy solving technical problems, building working applications and understanding how systems fit together.</p>
+<div class="st"><div><strong id="n1">3+</strong>Projects</div><div><strong>10+</strong>Technical skills</div><div><strong>2026</strong>Industry experience</div></div></div></div></section>
 
-  <main>
-    <!-- HERO -->
-    <section id="home" class="hero container">
-      <div class="hero-text reveal">
-        <p class="hero-hello">Hello, I'm Leeroy</p>
-        <h1>Computer Scientist<br />Software Developer &amp; Engineer</h1>
-        <p class="hero-intro">
-          I develop practical software solutions and apply my knowledge of
-          programming, networking, Linux and cybersecurity to real-world
-          projects.
-        </p>
-        <div class="hero-actions">
-          <a href="assets/Leeroy_Mwangi_CV.pdf" class="btn" download>Download CV</a>
-          <a href="#projects" class="btn btn-ghost">View My Work</a>
-        </div>
-        <div class="socials">
-          <a href="https://www.linkedin.com/in/leeroy-mwangi-39836832a/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>
-          </a>
-          <a href="https://github.com/SaintLT" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
-          </a>
-        </div>
-      </div>
+<section id="skills"><h2 class="d">Skills</h2><div class="sk">
+<div><h3>Programming</h3><div class="tg"><span>Python</span><span>Software Engineering</span><span>Problem Solving</span></div></div>
+<div><h3>Web Development</h3><div class="tg"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
+<div><h3>Tools</h3><div class="tg"><span>Git</span><span>GitHub</span></div></div>
+<div><h3>Systems &amp; Security</h3><div class="tg"><span>Networking</span><span>Linux</span><span>Cybersecurity</span></div></div></div></section>
 
-      <div class="hero-photo reveal">
-        <div class="photo-ring">
-          <img src="images/profile1.jpg" alt="Leeroy Mwangi" />
-        </div>
-      </div>
-    </section>
+<section id="projects"><h2 class="d">Projects</h2><div id="pj" aria-live="polite"></div><p class="note" id="pn">Loading from GitHub…</p></section>
 
-    <!-- ABOUT -->
-    <section id="about" class="section container">
-      <div class="section-head reveal">
-        <h2>About Me</h2>
-        <p class="sub">Turning technical knowledge into practical solutions</p>
-      </div>
+<section id="experience"><h2 class="d">Experience</h2><div class="card"><h3>Computer Science Industrial Attachment · 2026</h3><p>Hands-on work with IT systems, networking, troubleshooting and technical support in a professional environment.</p><div class="tg"><span>Network troubleshooting</span><span>Hardware &amp; software support</span><span>Windows administration</span><span>Networking fundamentals</span></div></div></section>
 
-      <div class="about-text reveal">
-        <p>
-          I am a Computer Science student and software developer with practical
-          experience across software development, networking, Linux and
-          cybersecurity. I enjoy solving technical problems, building
-          functional applications and exploring how systems work together.
-          Through personal projects and hands-on technical environments, I have
-          developed a strong foundation in programming, system administration,
-          networking and software engineering.
-        </p>
-      </div>
+<section id="contact"><div class="cn"><div><h2 class="d" style="font-size:clamp(3rem,8vw,6rem)">Let’s build something useful.</h2>
+<p class="note">Open to opportunities, collaboration and technical projects.</p>
+<p><a href="mailto:leeroymwangi92@gmail.com">leeroymwangi92@gmail.com</a><br><a href="tel:+254713455066">+254 713 455066</a><br><a href="https://github.com/SaintLT">GitHub @SaintLT</a><br><a href="https://www.linkedin.com/in/leeroy-mwangi-39836832a/">LinkedIn</a></p></div>
+<form id="cf2"><label>Name<input id="fn" required autocomplete="name"></label><label>Message<textarea id="fm" rows="5" required></textarea></label><button class="btn" type="submit">Send by email</button></form></div></section>
+</main>
+<footer>© Leeroy Mwangi</footer>
 
-      <h3 class="mini-title reveal">My Focus</h3>
+<a id="wa" class="fab" target="_blank" rel="noopener" href="https://wa.me/254713455066?text=Hi%20Leeroy%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk.">WhatsApp me</a>
+<button id="ai" class="fab" type="button" aria-expanded="false" aria-controls="cp">Ask my assistant</button>
+<div id="cp" role="dialog" aria-label="Assistant"><header>Leeroy’s assistant<button type="button" id="cx" aria-label="Close" style="background:none;border:0;color:inherit;cursor:pointer;font-size:18px">✕</button></header><div id="cl" role="log"><p>Hi! Ask me about Leeroy’s skills, projects or experience. You can also tap the mic and talk.</p></div>
+<form id="cf"><input id="ci" aria-label="Your question" placeholder="Type a question…" autocomplete="off"><button type="button" id="mic" aria-label="Speak">🎤</button><button type="submit">Send</button></form></div>
 
-      <div class="steps">
-        <div class="step reveal"><span>01</span>Software Development &amp; Engineering</div>
-        <div class="step reveal"><span>02</span>Networking &amp; Systems</div>
-        <div class="step reveal"><span>03</span>Linux &amp; Cybersecurity</div>
-      </div>
-
-      <div class="stats reveal">
-        <div><strong>03+</strong><small>Projects</small></div>
-        <div><strong>10+</strong><small>Technical Skills</small></div>
-        <div><strong>2026</strong><small>Industry Experience</small></div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section container">
-      <div class="section-head reveal">
-        <h2>Skills</h2>
-        <p class="sub">Technical skills applied through practical projects</p>
-      </div>
-
-      <div class="grid-4">
-        <div class="card reveal">
-          <h3>Programming</h3>
-          <div class="chips">
-            <span>Python</span>
-            <span>Software Engineering</span>
-            <span>Problem Solving</span>
-          </div>
-        </div>
-
-        <div class="card reveal">
-          <h3>Web Development</h3>
-          <div class="chips">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-          </div>
-        </div>
-
-        <div class="card reveal">
-          <h3>Tools &amp; Version Control</h3>
-          <div class="chips">
-            <span>Git</span>
-            <span>GitHub</span>
-          </div>
-        </div>
-
-        <div class="card reveal">
-          <h3>Systems &amp; Security</h3>
-          <div class="chips">
-            <span>Networking</span>
-            <span>Linux</span>
-            <span>Cybersecurity</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="section container">
-      <div class="section-head reveal">
-        <h2>Projects</h2>
-        <p class="sub">Practical work that demonstrates my technical skills</p>
-      </div>
-
-      <div class="grid-3">
-        <article class="card project reveal">
-          <p class="tag">Python Project</p>
-          <h3>Python Calculator</h3>
-          <p>
-            A Python application demonstrating programming fundamentals,
-            logical problem solving and Git/GitHub version control.
-          </p>
-          <div class="chips">
-            <span>Python</span>
-            <span>Git</span>
-            <span>GitHub</span>
-          </div>
-          <a href="https://github.com/SaintLT/Python-calc" target="_blank" rel="noopener" class="link">View on GitHub →</a>
-        </article>
-
-        <article class="card project reveal">
-          <p class="tag">Netdiag Project</p>
-          <h3>Network Diagnostic Toolkit</h3>
-          <p>
-            A Python-based toolkit focused on network diagnostics,
-            troubleshooting and practical networking concepts.
-          </p>
-          <div class="chips">
-            <span>Python</span>
-            <span>Networking</span>
-          </div>
-          <a href="https://github.com/SaintLT/Netdiag" target="_blank" rel="noopener" class="link">View on GitHub →</a>
-        </article>
-
-        <article class="card project reveal">
-          <p class="tag">Web Development</p>
-          <h3>Personal Portfolio Website</h3>
-          <p>
-            A responsive portfolio website designed and developed to showcase
-            my technical skills, projects and professional work.
-          </p>
-          <div class="chips">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>Git</span>
-          </div>
-          <a href="https://github.com/SaintLT/Leeroy-Portofolio" target="_blank" rel="noopener" class="link">View on GitHub →</a>
-        </article>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section container">
-      <div class="section-head reveal">
-        <h2>Experience</h2>
-        <p class="sub">Practical experience in technical and IT environments</p>
-      </div>
-
-      <div class="card exp reveal">
-        <div class="exp-top">
-          <h3>Computer Science Industrial Attachment</h3>
-          <span class="tag">2026</span>
-        </div>
-
-        <p>
-          Gained practical experience working with IT systems, networking,
-          troubleshooting and technical problem solving in a professional
-          environment. Applied computer science knowledge to real-world
-          technical tasks while strengthening skills in systems and network
-          support.
-        </p>
-
-        <div class="chips">
-          <span>Network Troubleshooting</span>
-          <span>Hardware &amp; Software Support</span>
-          <span>Windows Administration</span>
-          <span>Networking Fundamentals</span>
-          <span>Technical Problem Solving</span>
-        </div>
-      </div>
-
-      <h3 class="mini-title reveal">Technical Journey</h3>
-
-      <ol class="journey reveal">
-        <li>Software Development &amp; Engineering</li>
-        <li>Python Programming</li>
-        <li>Git &amp; GitHub</li>
-        <li>Web Development</li>
-        <li>Networking &amp; Systems</li>
-        <li>Linux</li>
-        <li>Cybersecurity</li>
-        <li>Technical Problem Solving</li>
-        <li>Building Practical Projects</li>
-      </ol>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section container">
-      <div class="section-head reveal">
-        <h2>Let's Talk</h2>
-        <p class="sub">Open to opportunities, collaboration and technical projects</p>
-      </div>
-
-      <div class="grid-4">
-        <a class="card contact reveal" href="mailto:leeroymwangi92@gmail.com">
-          <h3>Email</h3>
-          <p>leeroymwangi92@gmail.com</p>
-        </a>
-
-        <a class="card contact reveal" href="tel:+254713455066">
-          <h3>Phone</h3>
-          <p>+254 713 455066<br />+254 113 070354</p>
-        </a>
-
-        <a class="card contact reveal" href="https://github.com/SaintLT" target="_blank" rel="noopener">
-          <h3>GitHub</h3>
-          <p>@SaintLT</p>
-        </a>
-
-        <a class="card contact reveal" href="https://www.linkedin.com/in/leeroy-mwangi-39836832a/" target="_blank" rel="noopener">
-          <h3>LinkedIn</h3>
-          <p>Leeroy Mwangi</p>
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>© <span id="year"></span> Leeroy Mwangi. Built with HTML, CSS &amp; JavaScript.</p>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+const USER='SaintLT', WORKER_URL='', $=s=>document.querySelector(s);
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+// theme
+const root=document.documentElement, th=$('#th');
+function setTheme(t){root.dataset.theme=t;th.setAttribute('aria-label','Switch to '+(t==='dark'?'light':'dark')+' theme');try{localStorage.setItem('theme',t)}catch(e){}}
+let saved=null;try{saved=localStorage.getItem('theme')}catch(e){}
+setTheme(saved||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+th.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+// loader + hero
+const ld=$('#ld');
+function reveal(){ld.remove();if(window.gsap&&!RM)gsap.from('#hl,#sub',{yPercent:30,opacity:0,duration:1,stagger:.12,ease:'power4.out'})}
+if(window.gsap&&!RM){const o={v:0};gsap.to(o,{v:100,duration:1.6,ease:'power2.inOut',onUpdate:()=>ld.textContent=Math.round(o.v)+'%',onComplete:()=>gsap.to(ld,{yPercent:-100,duration:.8,ease:'power4.inOut',onComplete:reveal})})}else reveal();
+// hover distortion
+const hl=$('#hl');
+if(window.gsap&&!RM){const tb=$('#tb'),dm=$('#dm');
+hl.onmouseenter=()=>{gsap.to(dm,{attr:{scale:55},duration:.5});gsap.to(tb,{attr:{baseFrequency:'0.02 0.05'},duration:.8})};
+hl.onmouseleave=()=>{gsap.to(dm,{attr:{scale:0},duration:.6});gsap.to(tb,{attr:{baseFrequency:'0.012 0.03'},duration:.6})}}
+// smooth scroll
+if(window.Lenis&&!RM){const l=new Lenis();(function r(t){l.raf(t);requestAnimationFrame(r)})(0);
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();l.scrollTo(t)}}))}
+// GitHub projects
+const FALLBACK=[{name:'Python Calculator',description:'Python application demonstrating programming fundamentals, logical problem solving and Git/GitHub version control.',html_url:'https://github.com/SaintLT/Python-calc',language:'Python'},{name:'Network Diagnostic Toolkit',description:'Python-based toolkit for network diagnostics and troubleshooting.',html_url:'https://github.com/SaintLT/Netdiag',language:'Python'},{name:'Personal Portfolio Website',description:'Responsive portfolio showcasing my skills and projects.',html_url:'https://github.com/SaintLT/Leeroy-Portofolio',language:'JavaScript'}];
+function draw(list){const pj=$('#pj');pj.replaceChildren();list.forEach(r=>{const c=el('div','card');c.append(el('h3',null,r.name.replace(/[-_]/g,' ')),el('p',null,r.description||'No description yet.'));const t=el('div','tg');[r.language,...(r.topics||[]).filter(x=>x!=='portfolio').slice(0,3)].filter(Boolean).forEach(x=>t.append(el('span',null,x)));c.append(t);const a=el('a',null,'View on GitHub →');a.href=r.html_url;c.append(a);pj.append(c)});$('#n1').textContent=list.length+'+'}
+draw(FALLBACK);
+fetch(`https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`).then(r=>{if(!r.ok)throw 0;return r.json()}).then(rs=>{
+ rs=rs.filter(r=>!r.fork&&!r.archived&&r.name.toLowerCase()!==USER.toLowerCase());
+ const tagged=rs.filter(r=>(r.topics||[]).includes('portfolio'));const list=tagged.length?tagged:rs;
+ if(list.length){draw(list);$('#pn').textContent='Synced live from GitHub. Add the topic “portfolio” to a repo to show only tagged repos.'}else $('#pn').textContent=''
+}).catch(()=>{$('#pn').textContent='Showing saved projects (GitHub unavailable right now).'});
+// contact
+$('#cf2').onsubmit=e=>{e.preventDefault();location.href='mailto:leeroymwangi92@gmail.com?subject='+encodeURIComponent('Portfolio message from '+$('#fn').value)+'&body='+encodeURIComponent($('#fm').value)};
+// assistant
+const cp=$('#cp'),cl=$('#cl'),ci=$('#ci'),hist=[];let spoke=false;
+$('#ai').onclick=()=>{const o=cp.classList.toggle('on');$('#ai').setAttribute('aria-expanded',o);if(o)ci.focus()};
+$('#cx').onclick=()=>{cp.classList.remove('on');$('#ai').focus()};
+const say=(t,u)=>{cl.append(el('p',u?'u':'',t));cl.scrollTop=cl.scrollHeight};
+$('#cf').onsubmit=async e=>{e.preventDefault();const q=ci.value.trim();if(!q)return;ci.value='';say(q,1);hist.push({role:'user',content:q});
+ let a='The assistant isn’t connected yet. Email Leeroy at leeroymwangi92@gmail.com.';
+ if(WORKER_URL){try{const r=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist})});a=(await r.json()).reply||a}catch(x){a='Something went wrong. Try again, or email Leeroy directly.'}}
+ hist.push({role:'assistant',content:a});say(a);
+ if(spoke&&window.speechSynthesis)speechSynthesis.speak(new SpeechSynthesisUtterance(a));spoke=false};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition,mic=$('#mic');
+if(!SR)mic.hidden=true;else mic.onclick=()=>{const r=new SR();r.lang='en-US';r.onresult=e=>{ci.value=e.results[0][0].transcript;spoke=true;$('#cf').requestSubmit()};r.start()};
+</script>
 </body>
 </html>
