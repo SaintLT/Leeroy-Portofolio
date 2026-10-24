@@ -1,7 +1,29 @@
 <!DOCTYPE html>
+<!--
+  LEEROY MWANGI PORTFOLIO - annotated source
+  ------------------------------------------------------------
+  One self-contained file: HTML (structure), CSS (look) and JS (behaviour).
+  Only external pieces: Google Fonts and three.js (loaded from CDNs).
+
+  HOW IT IS ORGANISED
+    1. <head>    meta tags and the CSS (theme variables first)
+    2. <body>    loader, canvas, nav, icon sprite, sections, CV modal
+    3. <script>  all behaviour, in the order it runs
+
+  WHAT TO EDIT
+    - Colours:   the variables at the top of the CSS (:root)
+    - Text:      inside each <section>
+    - Skills:    the SK array in the script
+    - Photo:     put your picture at images/profile1.jpg
+    - CV:        assets/Leeroy_Mwangi_CV.pdf (link appears in two places)
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!--
+  viewport-fit=cover lets the page use the full phone screen. The env(safe-area-inset)
+  padding in the CSS keeps content clear of notches.
+-->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Leeroy Mwangi – Software Developer & Engineer</title>
 <meta name="description" content="Portfolio of Leeroy Mwangi, Computer Science student and software developer skilled in software engineering, networking, Linux and cybersecurity.">
@@ -9,95 +31,995 @@
 <meta property="og:title" content="Leeroy Mwangi – Software Developer & Engineer">
 <meta property="og:description" content="Practical software solutions across development, networking, Linux and cybersecurity.">
 <meta property="og:image" content="https://saintlt.github.io/Leeroy-Portofolio/images/profile1.jpg">
+<!--
+  Google Font (Space Grotesk). If it fails, the CSS falls back to system fonts.
+-->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#05030f;--panel:rgba(22,12,52,.55);--line:rgba(190,140,255,.2);--text:#f3eeff;--mute:#aaa0cc;--cyan:#22e8ff;--mag:#ff3d9a;--vio:#8b4dff;--amb:#ffb02e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root{--nav:rgba(10,5,28,.65);--face:linear-gradient(160deg,#1a0d3f,#08041c)}
-:root[data-theme="light"]{--bg:#f5f1ff;--panel:rgba(255,255,255,.72);--line:rgba(110,70,200,.25);--text:#1b1233;--mute:#5a4f7e;--cyan:#0a86a8;--mag:#e0197d;--vio:#6d34e6;--amb:#d98400;--nav:rgba(255,255,255,.78);--face:linear-gradient(160deg,#efe6ff,#fff)}
-:root[data-theme="dark"]{--bg:#05030f}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#05030f}}
-html{scroll-padding-top:90px;scroll-behavior:smooth}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
-#gl{position:fixed;inset:0;z-index:0;width:100%;height:100%}
-#aura{position:fixed;width:460px;height:460px;border-radius:50%;pointer-events:none;z-index:1;transform:translate(-50%,-50%);left:50%;top:35%;background:radial-gradient(circle,rgba(255,61,154,.22),rgba(139,77,255,.14) 45%,transparent 70%);transition:left .3s ease-out,top .3s ease-out}
-main,nav{position:relative;z-index:2}
-nav{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:6px;border:1px solid var(--line);border-radius:999px;background:var(--nav);backdrop-filter:blur(14px);z-index:5;max-width:96vw;overflow-x:auto}
-nav a{color:var(--mute);text-decoration:none;font-size:.8rem;padding:7px 14px;border-radius:999px;white-space:nowrap;transition:.2s}
-nav a.on,nav a:hover{color:#fff;background:linear-gradient(90deg,rgba(139,77,255,.5),rgba(255,61,154,.4));box-shadow:0 0 20px rgba(255,61,154,.45)}
-section{padding:64px 6vw 12px;max-width:1150px;margin:auto}#home{padding-top:100px}
-h1,h2{margin:0;line-height:1.02;font-weight:700;letter-spacing:-.02em}
-h1{font-size:clamp(2.5rem,7.5vw,5rem)}h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:8px}
-.glow{background:linear-gradient(90deg,var(--cyan),var(--vio) 50%,var(--mag));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 20px rgba(139,77,255,.55))}
-p{color:var(--mute);max-width:58ch}
-.btn{display:inline-block;padding:12px 24px;border-radius:12px;font:700 .85rem "Space Grotesk",sans-serif;text-decoration:none;color:#fff;background:linear-gradient(90deg,var(--vio),var(--mag));border:0;cursor:pointer;box-shadow:0 0 28px rgba(255,61,154,.55);transition:transform .2s,box-shadow .2s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(34,232,255,.65)}
-.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;backdrop-filter:blur(10px);transition:border-color .3s,box-shadow .3s}
-.card:hover{border-color:rgba(34,232,255,.55);box-shadow:0 0 36px rgba(139,77,255,.4)}
-.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:30px;align-items:center;min-height:80vh}
-.hero p.hi{color:var(--cyan);font-weight:500;margin:0 0 10px}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 20px}
-.soc{display:flex;gap:12px}.soc a{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line);color:var(--text);background:var(--panel);transition:.25s}.soc a:hover{color:#fff;background:linear-gradient(135deg,var(--vio),var(--mag));box-shadow:0 0 24px rgba(255,61,154,.6);transform:translateY(-3px)}.ic{width:20px;height:20px;fill:currentColor}
-.who{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.photo{position:relative;width:min(290px,72vw);aspect-ratio:3/4;margin:auto}
-.photo::before{content:"";position:absolute;inset:-14px;border-radius:34px;background:conic-gradient(from 0deg,var(--cyan),var(--vio),var(--mag),var(--amb),var(--cyan));filter:blur(24px);opacity:.8;animation:spin 6s linear infinite}
-.photo .face{position:absolute;inset:0;border-radius:24px;display:grid;place-items:center;font-weight:700;font-size:4rem;background:var(--face);border:1px solid var(--line);text-align:center}
-.photo .face img{width:100%;height:100%;object-fit:cover;border-radius:24px;display:block}
-.photo small{display:block;font-size:.7rem;font-weight:400;color:var(--mute);padding:0 14px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.focus{display:grid;gap:10px;margin:22px 0}
-.focus div{display:flex;gap:12px;align-items:center}
-.focus i{font-style:normal;font-weight:700;color:var(--amb);width:28px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.stats b{font-size:2.3rem;display:block;line-height:1.1}.stats span{font-size:.78rem;color:var(--mute)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:26px}
-.tilt{transform-style:preserve-3d;transition:transform .15s ease-out,border-color .3s,box-shadow .3s;will-change:transform}
-.tag{display:inline-block;font-size:.72rem;padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--cyan);margin:4px 6px 0 0}
-.card h3{margin:0 0 6px;font-size:1.1rem}.card p{font-size:.85rem;margin:0 0 10px}
-.card a.lnk{color:var(--mag);font-size:.85rem;text-decoration:none;font-weight:500}
-.shot{height:110px;border-radius:12px;margin-bottom:14px;background:linear-gradient(135deg,var(--vio),var(--mag) 60%,var(--amb));opacity:.85}
-.tl{list-style:none;padding:0;margin:20px 0 0;border-left:2px solid var(--line);display:grid;gap:12px}
-.tl li{position:relative;padding-left:22px;font-size:.9rem}
-.tl li::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--mag);box-shadow:0 0 14px var(--mag)}
-.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;margin-top:26px}
-.ct{display:grid;gap:14px}.ct b{display:block;font-size:.8rem;color:var(--cyan);font-weight:500}.ct a,.ct span{color:var(--text);text-decoration:none}
-footer{text-align:center;color:var(--mute);font-size:.78rem;padding:30px 0 50px;position:relative;z-index:2}
-a:focus-visible,.btn:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-#cvm{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(5,3,15,.78);backdrop-filter:blur(8px);padding:3vw;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-#cvm.open{opacity:1;visibility:visible}
-.cvbox{width:min(920px,100%);height:min(90vh,100%);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:18px;box-shadow:0 0 60px rgba(139,77,255,.5);transform:translateY(30px) scale(.94);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-#cvm.open .cvbox{transform:none}
-.cvbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);font-size:.85rem}
-.cvbar .btn{padding:8px 16px;font-size:.78rem}
-#cvx{background:none;border:1px solid var(--line);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem}#cvx:hover{border-color:var(--mag);color:var(--mag)}
-#cvf{flex:1;border:0;background:#fff;border-radius:0 0 18px 18px;min-height:0}
-.cvnote{font-size:.72rem;color:var(--mute);padding:6px 16px;margin:0;max-width:none}
-.links{display:flex;gap:2px}.ctl{display:flex;align-items:center;gap:2px}.brand,#menu{display:none}
-@media(max-width:760px){nav{width:calc(100% - 24px);justify-content:space-between;align-items:center;overflow:visible;padding:6px 8px 6px 18px}.brand{display:block;font-weight:700;letter-spacing:.05em}#menu{display:grid;font-size:1.15rem}.links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;padding:8px;border:1px solid var(--line);border-radius:18px;background:var(--nav);backdrop-filter:blur(14px)}nav.open .links{display:flex}.links a{padding:12px 16px;font-size:.9rem}}
-.rv{opacity:0;transform:translateY(40px) scale(.95);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
-.rv.in{opacity:1;transform:none}
-nav button{background:none;border:0;color:var(--mute);cursor:pointer;padding:6px 10px;border-radius:999px;display:grid;place-items:center}nav button:hover{color:var(--cyan)}
-#up{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:0;z-index:6;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--vio),var(--mag));box-shadow:0 0 26px rgba(255,61,154,.6);display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(24px) scale(.8);transition:.35s cubic-bezier(.2,.8,.2,1)}
-#up.show{opacity:1;visibility:visible;transform:none}#up.show:hover{transform:translateY(-4px)}
-.ct .row{display:flex;gap:14px;align-items:center;text-decoration:none}
-.ib{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--vio),var(--mag));color:#fff;flex:none;box-shadow:0 0 18px rgba(139,77,255,.5);transition:transform .25s}.ct a.row:hover .ib{transform:scale(1.1) rotate(-4deg)}
-#load{position:fixed;inset:0;z-index:20;background:var(--bg);display:grid;place-items:center;text-align:center;transition:opacity .8s,visibility .8s}
-#load.off{opacity:0;visibility:hidden}
-#load{animation:loadout .8s ease 2.6s forwards}@keyframes loadout{to{opacity:0;visibility:hidden}}
-@media(prefers-reduced-motion:reduce){#load{display:none}}
-#load svg{position:absolute;height:100%;filter:drop-shadow(0 0 14px #ff3d9a)}
-#load path{stroke-dasharray:900;stroke-dashoffset:900;animation:bolt 1.3s ease-out forwards}
-@keyframes bolt{to{stroke-dashoffset:0}}
-#load h2{position:relative;font-size:clamp(1.4rem,4vw,2.2rem)}
-@media(max-width:760px){.hero,.who,.two{grid-template-columns:1fr}.hero{min-height:70vh}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+        /*
+           THEME VARIABLES. Every colour is a CSS custom property (variable). Change a value
+           here and the whole site updates. --nav and --face are used by the nav bar and photo
+           card so they can switch with the theme. The padding with env(safe-area-inset-*)
+           keeps content clear of phone notches.
+        */
+        :root {
+            --bg: #05030f;
+            --panel: rgba(22,12,52,.55);
+            --line: rgba(190,140,255,.2);
+            --text: #f3eeff;
+            --mute: #aaa0cc;
+            --cyan: #22e8ff;
+            --mag: #ff3d9a;
+            --vio: #8b4dff;
+            --amb: #ffb02e;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top,0px);
+            padding-bottom: env(safe-area-inset-bottom,0px);
+        }
+
+        :root {
+            --nav: rgba(10,5,28,.65);
+            --face: linear-gradient(160deg,#1a0d3f,#08041c);
+        }
+
+        /*
+           LIGHT THEME. The JS toggle sets data-theme='light' on <html>. These rules re-define
+           the SAME variable names with new values, so no other CSS needs to change.
+        */
+        :root[data-theme="light"] {
+            --bg: #f5f1ff;
+            --panel: rgba(255,255,255,.72);
+            --line: rgba(110,70,200,.25);
+            --text: #1b1233;
+            --mute: #5a4f7e;
+            --cyan: #0a86a8;
+            --mag: #e0197d;
+            --vio: #6d34e6;
+            --amb: #d98400;
+            --nav: rgba(255,255,255,.78);
+            --face: linear-gradient(160deg,#efe6ff,#fff);
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #05030f;
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #05030f;
+            }
+        }
+
+        /*
+           html: smooth-scroll for anchor links, scroll-padding so a section is not hidden
+           under the fixed nav, and overflow-x hidden to stop sideways scrolling on phones.
+        */
+        html {
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /*
+           box-sizing: border-box makes width include padding and border, which makes layout
+           maths far easier.
+        */
+        * {
+            box-sizing: border-box;
+        }
+
+        /*
+           BASE STYLES. The font stack falls back to system fonts if Google Fonts fails to
+           load.
+        */
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /*
+           THE 3D CANVAS. Fixed to the viewport and behind everything (z-index 0). three.js
+           draws into it.
+        */
+        #gl {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*
+           CURSOR GLOW. A big blurred radial gradient that follows the pointer (position is set
+           from JS). pointer-events:none lets clicks pass through it.
+        */
+        #aura {
+            position: fixed;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%,-50%);
+            left: 50%;
+            top: 35%;
+            background: radial-gradient(circle,rgba(255,61,154,.22),rgba(139,77,255,.14) 45%,transparent 70%);
+            transition: left .3s ease-out,top .3s ease-out;
+        }
+
+        /*
+           main and nav sit above the canvas and aura (z-index 2).
+        */
+        main,nav {
+            position: relative;
+            z-index: 2;
+        }
+
+        /*
+           FLOATING GLASS NAV. position:fixed plus left:50% and translateX(-50%) centres it.
+           backdrop-filter blur gives the frosted-glass look.
+        */
+        nav {
+            position: fixed;
+            top: calc(14px + env(safe-area-inset-top,0px));
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2px;
+            padding: 6px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--nav);
+            backdrop-filter: blur(14px);
+            z-index: 5;
+            max-width: 96vw;
+            overflow-x: auto;
+        }
+
+        nav a {
+            color: var(--mute);
+            text-decoration: none;
+            font-size: .8rem;
+            padding: 7px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: .2s;
+        }
+
+        nav a.on,nav a:hover {
+            color: var(--text);
+            background: linear-gradient(90deg,rgba(139,77,255,.5),rgba(255,61,154,.4));
+            box-shadow: 0 0 20px rgba(255,61,154,.45);
+        }
+
+        /*
+           SECTIONS. Tight vertical padding keeps gaps small. overflow-x:clip trims anything
+           that pokes out sideways, such as the spinning photo glow, which used to widen the
+           page on phones.
+        */
+        section {
+            overflow-x: clip;
+            padding: 64px 6vw 12px;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        #home {
+            padding-top: 100px;
+        }
+
+        h1,h2 {
+            margin: 0;
+            line-height: 1.02;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem,7.5vw,5rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem,5vw,3rem);
+            margin-bottom: 8px;
+        }
+
+        /*
+           GRADIENT TEXT TRICK. Paint a gradient as the background, clip it to the text shape,
+           then make the text colour transparent.
+        */
+        .glow {
+            background: linear-gradient(90deg,var(--cyan),var(--vio) 50%,var(--mag));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 20px rgba(139,77,255,.55));
+        }
+
+        p {
+            color: var(--mute);
+            max-width: 58ch;
+        }
+
+        /*
+           BUTTONS. .btn is the filled gradient style and .btn.ghost is the outlined style.
+           Ghost uses var(--text) so it stays readable in light mode.
+        */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font: 700 .85rem "Space Grotesk",sans-serif;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(90deg,var(--vio),var(--mag));
+            border: 0;
+            cursor: pointer;
+            box-shadow: 0 0 28px rgba(255,61,154,.55);
+            transition: transform .2s,box-shadow .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 44px rgba(34,232,255,.65);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line);
+            box-shadow: none;
+        }
+
+        :root[data-theme="light"] .btn.ghost {
+            border-color: rgba(27,18,51,.45);
+        }
+
+        /*
+           GLASS CARD used for skills, projects, stats and contact. Semi-transparent panel plus
+           blur.
+        */
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: border-color .3s,box-shadow .3s;
+        }
+
+        .card:hover {
+            border-color: rgba(34,232,255,.55);
+            box-shadow: 0 0 36px rgba(139,77,255,.4);
+        }
+
+        /*
+           HERO LAYOUT. CSS grid with two columns (text and an empty column where the 3D shape
+           shows through). It becomes one column on phones in the media query below.
+        */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 30px;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero p.hi {
+            color: var(--cyan);
+            font-weight: 500;
+            margin: 0 0 10px;
+        }
+
+        .cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 26px 0 20px;
+        }
+
+        .soc {
+            display: flex;
+            gap: 12px;
+        }
+
+        .soc a {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            color: var(--text);
+            background: var(--panel);
+            transition: .25s;
+        }
+
+        .soc a:hover {
+            color: #fff;
+            background: linear-gradient(135deg,var(--vio),var(--mag));
+            box-shadow: 0 0 24px rgba(255,61,154,.6);
+            transform: translateY(-3px);
+        }
+
+        .ic {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .who {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /*
+           PROFILE PHOTO FRAME. The ::before pseudo-element is a blurred rotating conic-
+           gradient behind the photo, which creates the aura ring.
+        */
+        .photo {
+            position: relative;
+            width: min(290px,72vw);
+            aspect-ratio: 3/4;
+            margin: auto;
+        }
+
+        .photo::before {
+            content: "";
+            position: absolute;
+            inset: -14px;
+            border-radius: 34px;
+            background: conic-gradient(from 0deg,var(--cyan),var(--vio),var(--mag),var(--amb),var(--cyan));
+            filter: blur(24px);
+            opacity: .8;
+            animation: spin 6s linear infinite;
+        }
+
+        .photo .face {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 4rem;
+            background: var(--face);
+            border: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .photo .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            display: block;
+        }
+
+        .photo small {
+            display: block;
+            font-size: .7rem;
+            font-weight: 400;
+            color: var(--mute);
+            padding: 0 14px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .focus {
+            display: grid;
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .focus div {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .focus i {
+            font-style: normal;
+            font-weight: 700;
+            color: var(--amb);
+            width: 28px;
+        }
+
+        /*
+           STATS GRID. minmax(0,1fr) lets columns shrink below their content width. Plain 1fr
+           cannot, which made the boxes overflow on phones.
+        */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3,minmax(0,1fr));
+            gap: 14px;
+        }
+
+        .stats b {
+            font-size: 2.3rem;
+            display: block;
+            line-height: 1.1;
+        }
+
+        .stats span {
+            font-size: .78rem;
+            color: var(--mute);
+        }
+
+        /*
+           RESPONSIVE GRID WITHOUT MEDIA QUERIES. auto-fit with minmax(240px,1fr) fits as many
+           240px+ columns as the width allows.
+        */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        /*
+           3D TILT CARDS. JS sets an inline perspective/rotate transform on pointer move.
+           transform-style and will-change help the browser animate smoothly.
+        */
+        .tilt {
+            transform-style: preserve-3d;
+            transition: transform .15s ease-out,border-color .3s,box-shadow .3s;
+            will-change: transform;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: .72rem;
+            padding: 3px 10px;
+            border-radius: 99px;
+            border: 1px solid var(--line);
+            color: var(--cyan);
+            margin: 4px 6px 0 0;
+        }
+
+        .card h3 {
+            margin: 0 0 6px;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            font-size: .85rem;
+            margin: 0 0 10px;
+        }
+
+        .card a.lnk {
+            color: var(--mag);
+            font-size: .85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .shot {
+            height: 110px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg,var(--vio),var(--mag) 60%,var(--amb));
+            opacity: .85;
+        }
+
+        /*
+           TECHNICAL JOURNEY TIMELINE. A left border is the line and each li::before is a
+           glowing dot.
+        */
+        .tl {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+            border-left: 2px solid var(--line);
+            display: grid;
+            gap: 12px;
+        }
+
+        .tl li {
+            position: relative;
+            padding-left: 22px;
+            font-size: .9rem;
+        }
+
+        .tl li::before {
+            content: "";
+            position: absolute;
+            left: -7px;
+            top: 7px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--mag);
+            box-shadow: 0 0 14px var(--mag);
+        }
+
+        .two {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            margin-top: 26px;
+        }
+
+        .ct {
+            display: grid;
+            gap: 14px;
+        }
+
+        .ct b {
+            display: block;
+            font-size: .8rem;
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        .ct a,.ct span {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--mute);
+            font-size: .78rem;
+            padding: 30px 0 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /*
+           FOCUS OUTLINE for keyboard users. Never remove focus styles without replacing them.
+        */
+        a:focus-visible,.btn:focus-visible,button:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 3px;
+        }
+
+        /*
+           CV PREVIEW MODAL. A full-screen overlay (#cvm) that fades in when JS adds .open. The
+           box inside slides up. The iframe shows the PDF.
+        */
+        #cvm {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            display: grid;
+            place-items: center;
+            background: rgba(5,3,15,.78);
+            backdrop-filter: blur(8px);
+            padding: 3vw;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .3s,visibility .3s;
+        }
+
+        #cvm.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cvbox {
+            width: min(920px,100%);
+            height: min(90vh,100%);
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 0 60px rgba(139,77,255,.5);
+            transform: translateY(30px) scale(.94);
+            transition: transform .4s cubic-bezier(.2,.8,.2,1);
+        }
+
+        #cvm.open .cvbox {
+            transform: none;
+        }
+
+        .cvbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--line);
+            font-size: .85rem;
+        }
+
+        .cvbar .btn {
+            padding: 8px 16px;
+            font-size: .78rem;
+        }
+
+        #cvx {
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #cvx:hover {
+            border-color: var(--mag);
+            color: var(--mag);
+        }
+
+        #cvf {
+            flex: 1;
+            border: 0;
+            background: #fff;
+            border-radius: 0 0 18px 18px;
+            min-height: 0;
+        }
+
+        .cvnote {
+            font-size: .72rem;
+            color: var(--mute);
+            padding: 6px 16px;
+            margin: 0;
+            max-width: none;
+        }
+
+        /*
+           MOBILE NAV. On phones the links collapse into a dropdown that opens with the menu
+           button.
+        */
+        .links {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ctl {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .brand,#menu {
+            display: none;
+        }
+
+        /*
+           PHONE RULES for the nav. Links hide into a dropdown and nav.open shows them.
+        */
+        @media(max-width:760px) {
+            nav {
+                width: calc(100% - 24px);
+                justify-content: space-between;
+                align-items: center;
+                overflow: visible;
+                padding: 6px 8px 6px 18px;
+            }
+            .brand {
+                display: block;
+                font-weight: 700;
+                letter-spacing: .05em;
+            }
+            #menu {
+                display: grid;
+                font-size: 1.15rem;
+            }
+            .links {
+                display: none;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                padding: 8px;
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                background: var(--nav);
+                backdrop-filter: blur(14px);
+            }
+            nav.open .links {
+                display: flex;
+            }
+            .links a {
+                padding: 12px 16px;
+                font-size: .9rem;
+            }
+        }
+
+        /*
+           SCROLL REVEAL. Elements start hidden and shifted down (.rv). JS adds .in when they
+           enter the screen and they pop up. The --d variable staggers the delay.
+        */
+        .rv {
+            opacity: 0;
+            transform: translateY(40px) scale(.95);
+            transition: opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);
+            transition-delay: var(--d,0s);
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        /*
+           FALLBACK ORBIT. If WebGL is unavailable (for example hardware acceleration is off)
+           JS adds .no3d to <html> and these three CSS rings take the place of the 3D shape, so
+           the hero never looks empty.
+        */
+        #fb {
+            display: none;
+            position: fixed;
+            z-index: 0;
+            right: 9vw;
+            top: 50%;
+            width: min(36vw,440px);
+            aspect-ratio: 1;
+            margin-top: calc(min(36vw,440px)/-2);
+            perspective: 700px;
+            pointer-events: none;
+        }
+
+        .no3d #fb {
+            display: block;
+        }
+
+        #fb i {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid var(--mag);
+            box-shadow: 0 0 36px rgba(255,61,154,.55),inset 0 0 36px rgba(139,77,255,.45);
+            --a: 68deg;
+            animation: fbspin 9s linear infinite;
+        }
+
+        #fb i:nth-child(2) {
+            inset: 12%;
+            border-color: var(--cyan);
+            border-style: dashed;
+            --a: -55deg;
+            animation-duration: 7s;
+            animation-direction: reverse;
+        }
+
+        #fb i:nth-child(3) {
+            inset: 28%;
+            border-color: var(--vio);
+            --a: 20deg;
+            animation-duration: 12s;
+        }
+
+        @keyframes fbspin {
+            from {
+                transform: rotateX(var(--a)) rotateZ(0);
+            }
+            to {
+                transform: rotateX(var(--a)) rotateZ(360deg);
+            }
+        }
+
+        @media(max-width:760px) {
+            #fb {
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: 4vh;
+                margin: 0 0 0 -30vw;
+                width: 60vw;
+            }
+        }
+
+        /*
+           NAV BUTTONS (theme and menu icons).
+        */
+        nav button {
+            background: none;
+            border: 0;
+            color: var(--mute);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+        }
+
+        nav button:hover {
+            color: var(--cyan);
+        }
+
+        /*
+           BACK-TO-TOP BUTTON. Hidden by default with opacity, visibility and transform. JS
+           adds .show after scrolling 600px.
+        */
+        #up {
+            position: fixed;
+            right: 18px;
+            bottom: calc(18px + env(safe-area-inset-bottom,0px));
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 0;
+            z-index: 6;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(135deg,var(--vio),var(--mag));
+            box-shadow: 0 0 26px rgba(255,61,154,.6);
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(24px) scale(.8);
+            transition: .35s cubic-bezier(.2,.8,.2,1);
+        }
+
+        #up.show {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+        }
+
+        #up.show:hover {
+            transform: translateY(-4px);
+        }
+
+        /*
+           CONTACT ROWS. Each row is a link with an icon box and a text block.
+        */
+        .ct .row {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .ib {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg,var(--vio),var(--mag));
+            color: #fff;
+            flex: none;
+            box-shadow: 0 0 18px rgba(139,77,255,.5);
+            transition: transform .25s;
+        }
+
+        .ct a.row:hover .ib {
+            transform: scale(1.1) rotate(-4deg);
+        }
+
+        /*
+           LOADING SCREEN. Covers the page, then fades out when JS adds .off.
+        */
+        #load {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            background: var(--bg);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            transition: opacity .8s,visibility .8s;
+        }
+
+        #load.off {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /*
+           FAILSAFE. This pure-CSS animation also hides the loader after 2.6s, so the page can
+           never get stuck on it even if the JS fails to run.
+        */
+        #load {
+            animation: loadout .8s ease 2.6s forwards;
+        }
+
+        @keyframes loadout {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            #load {
+                display: none;
+            }
+        }
+
+        #load svg {
+            position: absolute;
+            height: 100%;
+            filter: drop-shadow(0 0 14px #ff3d9a);
+        }
+
+        #load path {
+            stroke-dasharray: 900;
+            stroke-dashoffset: 900;
+            animation: bolt 1.3s ease-out forwards;
+        }
+
+        @keyframes bolt {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        #load h2 {
+            position: relative;
+            font-size: clamp(1.4rem,4vw,2.2rem);
+        }
+
+        /*
+           PHONE RULES for layout. Multi-column grids become one column and the stats shrink.
+        */
+        @media(max-width:760px) {
+            .hero,.who,.two {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                min-height: 70vh;
+            }
+            .stats {
+                gap: 10px;
+            }
+            .stats .card {
+                padding: 14px 10px;
+            }
+            .stats b {
+                font-size: 1.7rem;
+            }
+            .stats span {
+                font-size: .7rem;
+            }
+        }
+
+        /*
+           ACCESSIBILITY. Switch off animations for people who ask their device to reduce
+           motion.
+        */
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none!important;
+                transition: none!important;
+            }
+        }
+
+    </style>
 </head>
 <body>
+<!--
+  LOADING SCREEN: an SVG lightning bolt that draws itself, plus the welcome text.
+  Hidden by JS (and by a CSS failsafe).
+-->
 <div id="load"><svg viewBox="0 0 200 400" preserveAspectRatio="xMidYMid slice"><path d="M110 0 L80 120 L125 135 L70 250 L112 262 L90 400" fill="none" stroke="#22e8ff" stroke-width="3"/></svg><h2>Welcome to my<br><span class="glow">portfolio</span></h2></div>
-<canvas id="gl" aria-hidden="true"></canvas><div id="aura"></div>
+<!--
+  3D canvas and cursor glow. They are decoration only, so aria-hidden keeps them away
+  from screen readers.
+-->
+<canvas id="gl" aria-hidden="true"></canvas><!--
+  Fallback orbit rings, shown only when the 3D scene cannot start.
+-->
+<div id="fb" aria-hidden="true"><i></i><i></i><i></i></div><div id="aura"></div>
+<!--
+  NAVIGATION: brand (phones only), links, then the theme toggle and menu button. Links
+  use #id anchors to jump to sections.
+-->
 <nav><b class="brand">LM</b><div class="links"><a href="#home" class="on">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a></div><span class="ctl"><button id="theme" type="button" aria-label="Switch between dark and light mode"></button><button id="menu" type="button" aria-label="Open menu" aria-expanded="false">☰</button></span></nav>
+<!--
+  ICON SPRITE: each icon is defined once as a <symbol> and reused anywhere with
+  <svg><use href='#i-name'/></svg>. Icons inherit text colour through currentColor.
+-->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-gh" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.76 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></symbol>
 <symbol id="i-in" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
@@ -108,8 +1030,18 @@ nav button{background:none;border:0;color:var(--mute);cursor:pointer;padding:6px
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
 <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </defs></svg>
+<!--
+  BACK-TO-TOP BUTTON (shown by JS after scrolling).
+-->
 <button id="up" type="button" aria-label="Back to top"><svg class="ic"><use href="#i-up"/></svg></button>
+<!--
+  PAGE CONTENT: one <section> per area, each with an id that the nav links point to.
+-->
 <main>
+<!--
+  HOME: headline, intro, CV buttons and social icons. The empty second column lets the
+  3D shape show through.
+-->
 <section id="home"><div class="hero"><div>
 <p class="hi">Hello, I’m Leeroy</p>
 <h1>Computer Scientist,<br><span class="glow">Software Developer & Engineer</span></h1>
@@ -118,6 +1050,9 @@ nav button{background:none;border:0;color:var(--mute);cursor:pointer;padding:6px
 <div class="soc"><a href="https://github.com/SaintLT" aria-label="GitHub"><svg class="ic"><use href="#i-gh"/></svg></a><a href="https://www.linkedin.com/in/leeroy-mwangi-39836832a/" aria-label="LinkedIn"><svg class="ic"><use href="#i-in"/></svg></a><a href="https://wa.me/254713455066" aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a><a href="mailto:leeroymwangi92@gmail.com" aria-label="Email"><svg class="ic"><use href="#i-mail"/></svg></a></div>
 </div><div></div></div></section>
 
+<!--
+  ABOUT: text, the profile photo frame and the stat cards.
+-->
 <section id="about"><div class="who">
 <div><h2>About <span class="glow">me</span></h2><p style="color:var(--text)">Turning technical knowledge into practical solutions.</p>
 <p>I am a Computer Science student and software developer with practical experience across software development, networking, Linux and cybersecurity. I enjoy solving technical problems, building functional applications and exploring how systems work together.</p>
@@ -125,85 +1060,221 @@ nav button{background:none;border:0;color:var(--mute);cursor:pointer;padding:6px
 <div class="photo"><div class="face"><span>LM<small>Send me your photo and I’ll embed it here</small></span></div></div></div>
 <div class="stats" style="margin-top:24px"><div class="card"><b class="glow">03+</b><span>Projects</span></div><div class="card"><b class="glow">10+</b><span>Technical skills</span></div><div class="card"><b class="glow">2026</b><span>Industry experience</span></div></div></section>
 
+<!--
+  SKILLS: the cards are generated by JS from the SK array.
+-->
 <section id="skills"><h2>Skills</h2><p>Technical skills applied through practical projects.</p><div class="grid" id="sk"></div></section>
 
+<!--
+  PROJECTS: three cards with the tilt class. Edit the text and GitHub links here.
+-->
 <section id="projects"><h2>Pro<span class="glow">jects</span></h2><p>Practical work that demonstrates my technical skills.</p><div class="grid">
 <div class="card tilt"><div class="shot"></div><h3>Python Calculator</h3><p>A Python application demonstrating programming fundamentals, logical problem solving and Git/GitHub version control.</p><span class="tag">Python</span><span class="tag">Git</span><span class="tag">GitHub</span><br><br><a class="lnk" href="https://github.com/SaintLT/Python-calc">View on GitHub</a></div>
 <div class="card tilt"><div class="shot" style="background:linear-gradient(135deg,var(--cyan),var(--vio))"></div><h3>Network Diagnostic Toolkit</h3><p>A Python-based toolkit focused on network diagnostics, troubleshooting and practical networking concepts.</p><span class="tag">Python</span><span class="tag">Networking</span><br><br><a class="lnk" href="https://github.com/SaintLT/Netdiag">View on GitHub</a></div>
 <div class="card tilt"><div class="shot" style="background:linear-gradient(135deg,var(--amb),var(--mag))"></div><h3>Personal Portfolio Website</h3><p>A responsive portfolio website designed and developed to showcase my technical skills, projects and professional work.</p><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Git</span><br><br><a class="lnk" href="https://github.com/SaintLT/Leeroy-Portofolio">View on GitHub</a></div>
 </div></section>
 
+<!--
+  EXPERIENCE: an experience card and the technical journey timeline (an ordered list).
+-->
 <section id="experience"><h2>Experience</h2><p>Practical experience in technical and IT environments.</p><div class="two">
 <div class="card"><h3>Computer Science Industrial Attachment · 2026</h3><p>Gained practical experience working with IT systems, networking, troubleshooting and technical problem solving in a professional environment, applying computer science knowledge to real-world tasks.</p><span class="tag">Network Troubleshooting</span><span class="tag">Hardware & Software Support</span><span class="tag">Windows Administration</span><span class="tag">Networking Fundamentals</span><span class="tag">Problem Solving</span></div>
 <div class="card"><h3>Technical journey</h3><ol class="tl"><li>Software Development & Engineering</li><li>Python Programming</li><li>Git & GitHub</li><li>Web Development</li><li>Networking & Systems</li><li>Linux</li><li>Cybersecurity</li><li>Technical Problem Solving</li><li>Building Practical Projects</li></ol></div></div></section>
 
+<!--
+  CONTACT: each row is a link (mailto, tel, wa.me for WhatsApp, GitHub, LinkedIn).
+-->
 <section id="contact" style="padding-bottom:30px"><h2>Let’s <span class="glow">talk</span></h2><p>Open to opportunities, collaboration and technical projects.</p>
 <div class="card ct" style="margin-top:20px;max-width:520px"><a class="row" href="mailto:leeroymwangi92@gmail.com"><i class="ib"><svg class="ic"><use href="#i-mail"/></svg></i><span><b>Email</b>leeroymwangi92@gmail.com</span></a><a class="row" href="tel:+254713455066"><i class="ib"><svg class="ic"><use href="#i-tel"/></svg></i><span><b>Phone</b>+254 713 455066<br>+254 113 070354</span></a><a class="row" href="https://wa.me/254713455066"><i class="ib"><svg class="ic"><use href="#i-wa"/></svg></i><span><b>WhatsApp</b>+254 713 455066</span></a><a class="row" href="https://github.com/SaintLT"><i class="ib"><svg class="ic"><use href="#i-gh"/></svg></i><span><b>GitHub</b>@SaintLT</span></a><a class="row" href="https://www.linkedin.com/in/leeroy-mwangi-39836832a/"><i class="ib"><svg class="ic"><use href="#i-in"/></svg></i><span><b>LinkedIn</b>Leeroy Mwangi</span></a></div></section>
 </main>
+<!--
+  CV PREVIEW MODAL: role=dialog and aria-modal tell assistive tech this is a pop-up.
+  The iframe src is filled in by JS when it opens.
+-->
 <div id="cvm" role="dialog" aria-modal="true" aria-label="CV preview"><div class="cvbox"><div class="cvbar"><b>Leeroy Mwangi – CV</b><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a class="btn" href="https://saintlt.github.io/Leeroy-Portofolio/assets/Leeroy_Mwangi_CV.pdf" download>Download</a><a class="btn ghost" href="https://saintlt.github.io/Leeroy-Portofolio/assets/Leeroy_Mwangi_CV.pdf" target="_blank" rel="noopener">Open in new tab</a><button id="cvx" type="button" aria-label="Close CV preview">✕</button></span></div><p class="cvnote">Preview not showing on your device? Use “Open in new tab”.</p><iframe id="cvf" title="CV preview"></iframe></div></div>
 <footer>© Leeroy Mwangi</footer>
 
+<!--
+  three.js r128 from a CDN, pinned to an exact version so it never changes under you.
+-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!--
+  MAIN SCRIPT: all behaviour lives here. Order: helpers, loader, skills, pointer
+  effects, tilt, 3D scene, theme, photo, CV modal, menu, back-to-top, scroll reveal.
+-->
 <script>
-const $=s=>document.querySelector(s);
-setTimeout(()=>$('#load').classList.add('off'),2200);
-// skills
-const SK=[['Programming','Python · Software Engineering · Problem Solving'],['Web Development','HTML · CSS · JavaScript'],['Tools & Version Control','Git · GitHub'],['Systems & Security','Networking · Linux · Cybersecurity']];
-$('#sk').innerHTML=SK.map(([t,d])=>`<div class="card tilt"><h3>${t}</h3><p>${d}</p></div>`).join('');
-// cursor aura + nav highlight
-const mouse={x:0,y:0};
-addEventListener('pointermove',e=>{const a=$('#aura');a.style.left=e.clientX+'px';a.style.top=e.clientY+'px';mouse.x=e.clientX/innerWidth*2-1;mouse.y=e.clientY/innerHeight*2-1});
-const links=[...document.querySelectorAll('nav a')];
-document.querySelectorAll('section').forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+s.id))}),{threshold:.5}).observe(s));
-// 3D card tilt
-document.querySelectorAll('.tilt').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(700px) rotateY(${x*14}deg) rotateX(${-y*14}deg) translateZ(8px)`});c.addEventListener('pointerleave',()=>c.style.transform='')});
-let onTheme=()=>{};
-// three.js scene
-try{
-const cv=$('#gl'),R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
-R.setPixelRatio(Math.min(devicePixelRatio,1.75));
-const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,100);cam.position.z=7;
-const wide=()=>innerWidth>760,mob=!wide();
-const g=new THREE.Group();sc.add(g);
-const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1.5,.42,mob?120:220,mob?16:28),new THREE.MeshBasicMaterial({color:0xff3d9a,wireframe:true,transparent:true,opacity:.55}));
-const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.9,1),new THREE.MeshBasicMaterial({color:0x22e8ff,wireframe:true,transparent:true}));
-const ring=new THREE.Mesh(new THREE.TorusGeometry(2.7,.02,8,120),new THREE.MeshBasicMaterial({color:0x8b4dff,transparent:true}));
-g.add(knot,core,ring);
-const N=mob?500:1100,pos=new Float32Array(N*3);for(let i=0;i<N*3;i++)pos[i]=(Math.random()-.5)*34;
-const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
-const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xcdb6ff,size:.05,transparent:true,opacity:.85}));sc.add(pts);
-function fit(){R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();g.position.x=wide()?2.6:0;g.position.y=wide()?0:-2.3;g.scale.setScalar(wide()?1:.5)}
-fit();addEventListener('resize',fit);
-onTheme=l=>{pts.material.color.set(l?0x6d34e6:0xcdb6ff);pts.material.opacity=l?.65:.85;core.material.color.set(l?0x0a86a8:0x22e8ff)};
-const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-function loop(t){const s=scrollY/innerHeight,k=t*.0004;
- knot.rotation.set(k*.8+mouse.y*.5,k+mouse.x*.6+s*.8,0);core.rotation.set(-k,k*1.3,0);ring.rotation.set(1.2+mouse.y*.3,k*.6,s);
- g.position.y=(wide()?0:-2.3)+s*(wide()?1.2:2.5);g.scale.setScalar((wide()?1:.5)*(1+Math.sin(k*3)*.03));const fd=wide()?1:Math.max(0,1-s*1.8);knot.material.opacity=.55*fd;core.material.opacity=fd;ring.material.opacity=fd;
- pts.rotation.y=k*.15+s*.2;cam.position.x+=(mouse.x*.6-cam.position.x)*.04;cam.position.y+=(-mouse.y*.4-cam.position.y)*.04;cam.lookAt(0,0,0);
- R.render(sc,cam);if(!calm)requestAnimationFrame(loop)}
-requestAnimationFrame(loop);if(calm)addEventListener('scroll',()=>loop(0));
-}catch(e){console.warn('WebGL unavailable',e)}
-// theme toggle
-function setTheme(l,save){document.documentElement.dataset.theme=l?'light':'dark';$('#theme').innerHTML='<svg class="ic"><use href="#i-'+(l?'moon':'sun')+'"/></svg>';onTheme(l);if(save)try{localStorage.setItem('theme',l?'light':'dark')}catch(e){}}
-let L=false;try{L=localStorage.getItem('theme')==='light'}catch(e){}
-setTheme(L,false);$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme!=='light',true);
-// profile photo: loads images/profile1.jpg when the file sits in your repo, otherwise keeps the initials
-{const im=new Image();im.alt='Leeroy Mwangi';im.onload=()=>{const f=$('.photo .face');f.textContent='';f.appendChild(im)};im.src='images/profile1.jpg'}
-// CV preview modal
-{const m=$('#cvm'),f=$('#cvf'),cv='https://saintlt.github.io/Leeroy-Portofolio/assets/Leeroy_Mwangi_CV.pdf';let opener=null;
-const open=()=>{opener=document.activeElement;if(!f.src)f.src=cv;m.classList.add('open');document.body.style.overflow='hidden';$('#cvx').focus()};
-const close=()=>{m.classList.remove('open');document.body.style.overflow='';if(opener)opener.focus()};
-$('#cvv').onclick=open;$('#cvx').onclick=close;m.addEventListener('click',e=>{if(e.target===m)close()});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))close()})}
-// mobile menu
-{const nv=$('nav'),mb=$('#menu');mb.onclick=()=>{const o=nv.classList.toggle('open');mb.setAttribute('aria-expanded',o)};links.forEach(l=>l.addEventListener('click',()=>{nv.classList.remove('open');mb.setAttribute('aria-expanded','false')}))}
-// back to top
-const up=$('#up'),calmM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-addEventListener('scroll',()=>up.classList.toggle('show',scrollY>600),{passive:true});
-up.onclick=()=>scrollTo({top:0,behavior:calmM?'auto':'smooth'});
-// pop-up reveal on scroll
-if(!calmM)setTimeout(()=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('rv','in'),1300)}}),{threshold:.12,rootMargin:'0px 0px -5% 0px'});
-document.querySelectorAll('section h2,section>p,.hero>div,.who>div,.card').forEach(el=>{el.style.setProperty('--d',([...el.parentNode.children].indexOf(el)%4)*.09+'s');el.classList.add('rv');io.observe(el)})},1900);
-</script>
+        const $ = s => document.querySelector(s);
+        // LOADER. Hide the loading screen after 2.2s by adding the .off class (CSS handles the
+        // fade).
+        setTimeout(() => $('#load').classList.add('off'), 2200);
+        // SKILLS DATA. Skills are stored as an array of [title, description] pairs and turned into
+        // cards with map() and a template literal. To add a skill, add one more pair to SK.
+        const SK = [['Programming', 'Python · Software Engineering · Problem Solving'], ['Web Development', 'HTML · CSS · JavaScript'], ['Tools & Version Control', 'Git · GitHub'], ['Systems & Security', 'Networking · Linux · Cybersecurity']];
+        $('#sk').innerHTML = SK.map(([t, d]) => `<div class="card tilt"><h3>${t}</h3><p>${d}</p></div>`).join('');
+        // POINTER EFFECTS AND NAV HIGHLIGHT.
+        // 1) pointermove moves the glow div and stores the pointer position (-1 to 1) in mouse,
+        // which the 3D scene reads for parallax.
+        // 2) An IntersectionObserver watches each section and highlights the nav link of the
+        // section that is more than 50% visible.
+        const mouse = { x: 0, y: 0 };
+        addEventListener('pointermove', e => { const a = $('#aura'); a.style.left = e.clientX + 'px'; a.style.top = e.clientY + 'px'; mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; });
+        const links = [...document.querySelectorAll('nav a')];
+        document.querySelectorAll('section').forEach(s => new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting)
+            links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + s.id)); }), { threshold: .5 }).observe(s));
+        // 3D CARD TILT. On pointermove we compute the pointer position inside the card as -0.5 to
+        // 0.5 (x and y), then rotate the card around Y and X with perspective. Resetting the
+        // inline style on pointerleave lets the card ease back.
+        document.querySelectorAll('.tilt').forEach(c => { c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; c.style.transform = `perspective(700px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateZ(8px)`; }); c.addEventListener('pointerleave', () => c.style.transform = ''); });
+        // Placeholder so the theme toggle can call onTheme even if three.js never loads. The real
+        // function is assigned inside the scene code below.
+        let onTheme = () => { };
+        // THREE.JS HERO SCENE. Every three.js app needs a renderer, a scene, a camera, objects and
+        // an animation loop. The whole thing sits in try/catch so if WebGL is unavailable the rest
+        // of the page still works.
+        try {
+            // Renderer: draws into the existing canvas. alpha:true keeps the background transparent so
+            // the page colour shows through.
+            const cv = $('#gl'), R = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+            // Cap the pixel ratio at 1.75. Sharper than 1 but much cheaper than full retina on big
+            // screens.
+            R.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+            // Scene holds the objects. PerspectiveCamera(fov, aspect, near, far) looks down the Z axis
+            // from z=7.
+            const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(55, 1, .1, 100);
+            cam.position.z = 7;
+            // wide() tells us if we are on a laptop-size screen. mob is used once to build a lighter
+            // scene on phones.
+            const wide = () => innerWidth > 760, mob = !wide();
+            // A Group lets us move, scale and place all the shapes as one unit.
+            const g = new THREE.Group();
+            sc.add(g);
+            // Pink wireframe torus knot. Fewer segments on phones keeps it smooth on weaker devices.
+            const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(1.5, .42, mob ? 120 : 220, mob ? 16 : 28), new THREE.MeshBasicMaterial({ color: 0xff3d9a, wireframe: true, transparent: true, opacity: .55 }));
+            // Cyan wireframe icosahedron inside the knot.
+            const core = new THREE.Mesh(new THREE.IcosahedronGeometry(.9, 1), new THREE.MeshBasicMaterial({ color: 0x22e8ff, wireframe: true, transparent: true }));
+            // Thin violet ring that tilts around the knot.
+            const ring = new THREE.Mesh(new THREE.TorusGeometry(2.7, .02, 8, 120), new THREE.MeshBasicMaterial({ color: 0x8b4dff, transparent: true }));
+            g.add(knot, core, ring);
+            // STARFIELD. N random points stored in one Float32Array (x, y, z for each star) and drawn
+            // as a single Points object. Fewer on phones.
+            const N = mob ? 500 : 1800, pos = new Float32Array(N * 3);
+            for (let i = 0; i < N * 3; i++)
+                pos[i] = (Math.random() - .5) * 34;
+            const pg = new THREE.BufferGeometry();
+            pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            // Points material: colour, size and transparency of the stars.
+            const pts = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xcdb6ff, size: .05, transparent: true, opacity: .85 }));
+            sc.add(pts);
+            // fit() runs on load and on every resize. It resizes the renderer, fixes the camera aspect
+            // ratio and places the group: right side on laptops, lower centre on phones.
+            function fit() { R.setSize(innerWidth, innerHeight); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); g.position.x = wide() ? 3.1 : 0; g.position.y = wide() ? 0 : -2.3; g.scale.setScalar(wide() ? 1.35 : .5); }
+            fit();
+            addEventListener('resize', fit);
+            // Recolour the stars and core to stay visible on a light background.
+            onTheme = l => { pts.material.color.set(l ? 0x6d34e6 : 0xcdb6ff); pts.material.opacity = l ? .65 : .85; core.material.color.set(l ? 0x0a86a8 : 0x22e8ff); };
+            // If the user prefers reduced motion we render on scroll instead of running a constant
+            // animation.
+            const calm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+            // ANIMATION LOOP. t is the time in ms. s is the scroll progress in screens. Rotations
+            // combine time, pointer position (mouse) and scroll. The camera eases toward the pointer
+            // for parallax. fd fades the shapes out on phones as you scroll so they never cover
+            // content.
+            function loop(t) {
+                const s = scrollY / innerHeight, k = t * .0004;
+                knot.rotation.set(k * .8 + mouse.y * .5, k + mouse.x * .6 + s * .8, 0);
+                core.rotation.set(-k, k * 1.3, 0);
+                ring.rotation.set(1.2 + mouse.y * .3, k * .6, s);
+                g.position.y = (wide() ? 0 : -2.3) + s * (wide() ? 1.2 : 2.5);
+                g.scale.setScalar((wide() ? 1.35 : .5) * (1 + Math.sin(k * 3) * .03));
+                const fd = wide() ? Math.max(.35, 1 - s * .35) : Math.max(0, 1 - s * 1.8);
+                knot.material.opacity = (wide() ? .7 : .55) * fd;
+                core.material.opacity = fd;
+                ring.material.opacity = fd;
+                pts.rotation.y = k * .15 + s * .2;
+                cam.position.x += (mouse.x * .6 - cam.position.x) * .04;
+                cam.position.y += (-mouse.y * .4 - cam.position.y) * .04;
+                cam.lookAt(0, 0, 0);
+                R.render(sc, cam);
+                if (!calm)
+                    requestAnimationFrame(loop);
+            }
+            requestAnimationFrame(loop);
+            if (calm)
+                addEventListener('scroll', () => loop(0));
+            if (calm)
+                addEventListener('resize', () => loop(0));
+        }
+        catch (e) {
+            console.warn('WebGL unavailable', e);
+            document.documentElement.classList.add('no3d');
+        }
+        // THEME TOGGLE. setTheme sets data-theme on <html> (the CSS variables do the rest), swaps
+        // the sun and moon icon, recolours the 3D objects through onTheme, and saves the choice in
+        // localStorage. localStorage is wrapped in try/catch because it can be blocked.
+        // Called on load with the saved theme and on every click of the toggle button.
+        function setTheme(l, save) { document.documentElement.dataset.theme = l ? 'light' : 'dark'; $('#theme').innerHTML = '<svg class="ic"><use href="#i-' + (l ? 'moon' : 'sun') + '"/></svg>'; onTheme(l); if (save)
+            try {
+                localStorage.setItem('theme', l ? 'light' : 'dark');
+            }
+            catch (e) { } }
+        let L = false;
+        try {
+            L = localStorage.getItem('theme') === 'light';
+        }
+        catch (e) { }
+        setTheme(L, false);
+        $('#theme').onclick = () => setTheme(document.documentElement.dataset.theme !== 'light', true);
+        // PROFILE PHOTO. Try to load images/profile1.jpg. If it loads, replace the initials with
+        // the image. If not, the initials stay.
+        {
+            const im = new Image();
+            im.alt = 'Leeroy Mwangi';
+            im.onload = () => { const f = $('.photo .face'); f.textContent = ''; f.appendChild(im); };
+            im.src = 'images/profile1.jpg';
+        }
+        // CV PREVIEW MODAL. open() sets the iframe src only on first use (lazy load), adds .open,
+        // locks body scroll and moves focus to the close button. close() reverses that and returns
+        // focus to the button that opened it. Esc and clicking the backdrop also close it, which
+        // is good keyboard accessibility.
+        {
+            const m = $('#cvm'), f = $('#cvf'), cv = 'https://saintlt.github.io/Leeroy-Portofolio/assets/Leeroy_Mwangi_CV.pdf';
+            let opener = null;
+            const open = () => { opener = document.activeElement; if (!f.src)
+                f.src = cv; m.classList.add('open'); document.body.style.overflow = 'hidden'; $('#cvx').focus(); };
+            const close = () => { m.classList.remove('open'); document.body.style.overflow = ''; if (opener)
+                opener.focus(); };
+            $('#cvv').onclick = open;
+            $('#cvx').onclick = close;
+            m.addEventListener('click', e => { if (e.target === m)
+                close(); });
+            addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('open'))
+                close(); });
+        }
+        // MOBILE MENU. Toggle .open on the nav, keep aria-expanded in sync for screen readers, and
+        // close the menu when a link is tapped.
+        {
+            const nv = $('nav'), mb = $('#menu');
+            mb.onclick = () => { const o = nv.classList.toggle('open'); mb.setAttribute('aria-expanded', o); };
+            links.forEach(l => l.addEventListener('click', () => { nv.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); }));
+        }
+        // BACK-TO-TOP BUTTON. Show it after 600px of scrolling. scrollTo with behavior smooth
+        // animates the jump, but respects the reduced-motion setting.
+        const up = $('#up'), calmM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+        addEventListener('scroll', () => up.classList.toggle('show', scrollY > 600), { passive: true });
+        up.onclick = () => scrollTo({ top: 0, behavior: calmM ? 'auto' : 'smooth' });
+        // SCROLL REVEAL. After the loader has gone (1.9s), tag elements with .rv (hidden) and
+        // watch them with an IntersectionObserver. When one enters the screen add .in so the CSS
+        // transition plays, stop watching it, then remove both classes after 1.3s so the 3D tilt
+        // transition works normally afterwards.
+        if (!calmM)
+            setTimeout(() => {
+                const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                    io.unobserve(e.target);
+                    setTimeout(() => e.target.classList.remove('rv', 'in'), 1300);
+                } }), { threshold: .12, rootMargin: '0px 0px -5% 0px' });
+                document.querySelectorAll('section h2,section>p,.hero>div,.who>div,.card').forEach(el => { el.style.setProperty('--d', ([...el.parentNode.children].indexOf(el) % 4) * .09 + 's'); el.classList.add('rv'); io.observe(el); });
+            }, 1900);
+    </script>
 </body>
 </html>
