@@ -1232,14 +1232,18 @@
             im.onload = () => { const f = $('.photo .face'); f.textContent = ''; f.appendChild(im); };
             im.src = 'images/profile1.jpg';
         }
-        // CV PREVIEW MODAL. open() sets the iframe src only on first use (lazy load), adds .open,
-        // locks body scroll and moves focus to the close button. close() reverses that and returns
-        // focus to the button that opened it. Esc and clicking the backdrop also close it, which
-        // is good keyboard accessibility.
+        // CV PREVIEW MODAL. Phones and tablets cannot show a PDF inside a page, so there open()
+        // simply opens the PDF in a new tab. On desktop, open() sets the iframe src only on first
+        // use (lazy load), adds .open, locks body scroll and moves focus to the close button.
+        // close() reverses that and returns focus to the button that opened it. Esc and clicking
+        // the backdrop also close it, which is good keyboard accessibility.
         {
             const m = $('#cvm'), f = $('#cvf'), cv = 'https://saintlt.github.io/Leeroy-Portofolio/assets/Leeroy_Mwangi_CV.pdf';
             let opener = null;
-            const open = () => { opener = document.activeElement; if (!f.src)
+            const open = () => { if (navigator.pdfViewerEnabled === false || matchMedia('(pointer:coarse)').matches) {
+                window.open(cv, '_blank', 'noopener');
+                return;
+            } opener = document.activeElement; if (!f.src)
                 f.src = cv; m.classList.add('open'); document.body.style.overflow = 'hidden'; $('#cvx').focus(); };
             const close = () => { m.classList.remove('open'); document.body.style.overflow = ''; if (opener)
                 opener.focus(); };
