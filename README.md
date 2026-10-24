@@ -1,96 +1,75 @@
-# Leeroy Mwangi — Personal Portfolio
+# Leeroy Mwangi – Portfolio
 
-## About
+Personal portfolio of **Leeroy Mwangi**, a Computer Science student and software developer working across software engineering, networking, Linux and cybersecurity.
 
-A personal portfolio website that showcases my Computer Science background, technical skills, projects and hands-on experience in software development, networking, Linux and cybersecurity. I built it from scratch with plain HTML, CSS and JavaScript to learn the fundamentals of web development.
-
-**Live site:** [saintlt.github.io/Leeroy-Portofolio](https://saintlt.github.io/Leeroy-Portofolio/)
-
-## Built With
-
-- HTML5 — semantic page structure
-- CSS3 — layout (Flexbox and Grid), design tokens and responsive design
-- JavaScript (vanilla) — interactions and scroll animations
-
-No frameworks or external libraries.
-
-## Sections
-
-- **Home** — introduction, links to my CV, GitHub and LinkedIn
-- **About** — a short profile, my focus areas and quick stats
-- **Skills** — Programming, Web Development, Tools & Version Control, and Systems & Security
-- **Projects** — practical work with tech tags and GitHub links
-- **Experience** — my 2026 Computer Science industrial attachment and my technical journey
-- **Contact** — email, phone, GitHub and LinkedIn
+**Live site:** https://saintlt.github.io/Leeroy-Portofolio/
 
 ## Features
 
-- Dark, minimal developer-style design with a single accent colour
-- Fully responsive (desktop, laptop, tablet and mobile)
-- Mobile navigation menu and active section highlighting
-- Smooth scrolling and subtle scroll-reveal animations
-- Downloadable CV (PDF) straight from the hero section
-- Accessible: semantic HTML, keyboard-friendly, skip link, visible focus styles
-- Respects the "reduced motion" setting
-- Easy to edit: add projects, skills and sections by copying existing blocks
+- **Live 3D hero:** a glowing wireframe scene built with three.js that follows the cursor and reacts to scroll. If WebGL is unavailable, animated CSS rings take its place.
+- **Dark and light mode:** a toggle in the nav bar that remembers your choice.
+- **Scroll animations:** sections pop up as they enter the screen, and a back-to-top button appears after scrolling.
+- **CV preview:** view the CV in a pop-up before downloading it.
+- **3D tilt cards** for skills and projects, plus a cursor glow and a lightning loading screen.
+- **Fully responsive:** a compact dropdown menu on phones and a layout that fits any screen width.
+- **Accessible:** keyboard focus styles, labelled icon buttons, and animations that switch off for visitors who prefer reduced motion.
 
-## Projects
+## Sections
 
-- **Python Calculator** — a Python application demonstrating programming fundamentals, logical problem solving and the Git/GitHub workflow. [View on GitHub](https://github.com/SaintLT/Python-calc)
-- **Network Diagnostic Toolkit** — a Python-based toolkit for network diagnostics and troubleshooting -  [View on GitHub](https://github.com/SaintLT/Netdiag)
-- **Personal Portfolio Website** — this website. [View on GitHub](https://github.com/SaintLT/Leeroy-Portofolio)
+Home · About · Skills · Projects · Experience · Contact
 
-## Experience
+## Built with
 
-**Computer Science Industrial Attachment (2026)** — practical experience with IT systems, networking, troubleshooting and technical problem solving in a professional environment.
+- HTML, CSS and vanilla JavaScript (no framework, no build step)
+- [three.js](https://threejs.org/) r128 for the 3D scene
+- [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) via Google Fonts
+- Inline SVG icons
 
-Key areas: network troubleshooting, hardware and software support, Windows administration, networking fundamentals.
-
-## Getting Started
-
-### Clone the repository
-
-```bash
-git clone https://github.com/SaintLT/Leeroy-Portofolio.git
-cd Leeroy-Portofolio
-```
-
-### Run it locally
-
-No build step is needed. Either:
-
-- double-click `index.html` to open it in your browser, or
-- use the **Live Server** extension in VS Code (right-click `index.html` → *Open with Live Server*).
-
-## Folder Structure
+## Project structure
 
 ```
 Leeroy-Portofolio/
-├── index.html        # Page content and structure
-├── css/
-│   └── style.css     # All styling
-├── js/
-│   └── script.js     # Interactivity
+├── index.html                  # the whole site: HTML, CSS and JS in one annotated file
 ├── images/
-│   └── profile1.jpg  # Profile photo
-├── assets/
-│   └── Leeroy_Mwangi_CV.pdf  # Downloadable CV
-└── README.md         # This file
+│   └── profile1.jpg            # profile photo shown in the About section
+└── assets/
+    └── Leeroy_Mwangi_CV.pdf    # CV used by the View CV and Download CV buttons
 ```
 
-## Future Improvements
+`index.html` is commented throughout, so it doubles as a learning resource.
 
-- Add screenshots and live demo links to each project
-- Add a favicon and Open Graph tags for nicer link previews
-- Add a light/dark theme toggle
-- Add a working contact form
-- Publish the Network Diagnostic Toolkit
-- Write short blog posts about what I'm learning
+## Run locally
 
-## Author
+No installation is needed. Either open `index.html` in a browser, or serve the folder:
 
-**Leeroy Mwangi**
+```bash
+python3 -m http.server 8000
+```
 
+Then visit `http://localhost:8000`. An internet connection is needed for the font and for three.js, which load from CDNs.
+
+## Customize
+
+| What | Where |
+| --- | --- |
+| Colours | CSS variables at the top of the `<style>` block (`:root`) |
+| Text and projects | Inside each `<section>` in `index.html` |
+| Skills | The `SK` array in the script |
+| Profile photo | Replace `images/profile1.jpg` |
+| CV | Replace `assets/Leeroy_Mwangi_CV.pdf` |
+
+## Deployment
+
+The site is hosted with **GitHub Pages**. Push changes to the main branch and the site updates within a minute or two.
+
+## Troubleshooting
+
+- **No 3D shape, only rings:** the browser cannot start WebGL. Turn on hardware (graphics) acceleration in the browser settings and restart it.
+- **Photo missing:** check that the file is named exactly `images/profile1.jpg`.
+- **CV does not preview in the pop-up:** some mobile browsers cannot show PDFs inline. Use the "Open in new tab" button instead.
+
+## Contact
+
+- Email: leeroymwangi92@gmail.com
 - GitHub: [@SaintLT](https://github.com/SaintLT)
 - LinkedIn: [Leeroy Mwangi](https://www.linkedin.com/in/leeroy-mwangi-39836832a/)
-- Email: [leeroymwangi92@gmail.com](mailto:leeroymwangi92@gmail.com)
