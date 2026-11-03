@@ -2,7 +2,7 @@
 
 Personal portfolio of **Leeroy Mwangi**, a Computer Science student and software developer working across software engineering, networking, Linux and cybersecurity.
 
-**Live site:** https://saintlt.github.io/Leeroy-Portofolio/
+**Live site:** https://leeroy-portofolio.vercel.app/
 
 ## Features
 
@@ -60,7 +60,7 @@ Then visit `http://localhost:8000`. An internet connection is needed for the fon
 
 ## Deployment
 
-The site is hosted with **GitHub Pages**. Push changes to the main branch and the site updates within a minute or two.
+The site is hosted with **Vercel**. Push changes to the main branch and the site updates within a minute or two.
 
 ## Troubleshooting
 
